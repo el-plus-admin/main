@@ -54,6 +54,11 @@ services:
     environment:
       <<: *common-environments
     image: '${PROJECT_NAME}/management-backend'
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: 10m
     ports:
       - '127.0.0.1:${MANAGEMENT_BACKEND_EXPOSE_PORT}:8000'
     pull_policy: never
@@ -72,6 +77,11 @@ services:
     environment:
       <<: *common-environments
     image: '${PROJECT_NAME}/ops-workers-ts'
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: 10m
     pull_policy: never
     restart: always
     secrets:

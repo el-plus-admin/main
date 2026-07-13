@@ -4,9 +4,10 @@ import { createBaseConfigs } from '@kikiutils/eslint-config/base';
 export default antfu(
     {
         ignores: [
-            '**/*',
-            '!.vscode/**',
-            '!*.yaml',
+            '**/*.*',
+            '!.vscode/',
+            '!.vscode/**/*.json',
+            '!**/*.yaml',
             '!eslint.config.mjs',
             '!package.json',
         ],
