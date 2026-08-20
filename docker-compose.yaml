@@ -1,22 +1,5 @@
 name: '${PROJECT_NAME}'
 
-# Anchors
-x-common-build-args: &common-build-args
-  NPM_CONFIG_REGISTRY: '${NPM_CONFIG_REGISTRY:-https://registry.npmjs.org}'
-  PNPM_CONFIG_REGISTRY: '${PNPM_CONFIG_REGISTRY:-https://registry.npmjs.org}'
-
-x-common-build-options: &common-build-options
-  args:
-    <<: *common-build-args
-
-x-common-environments: &common-environments
-  NODE_ENV: production
-
-x-networks: &networks
-  networks:
-    - default
-    # - infra_services
-
 networks:
   default:
     driver: bridge
@@ -30,60 +13,7 @@ secrets:
   REDIS_URL:
     environment: REDIS_URL
 
-services:
-  # Admin frontend
-  admin-frontend:
-    build:
-      <<: *common-build-options
-      context: ./admin-frontend
-    container_name: '${PROJECT_NAME}-admin-frontend'
-    environment:
-      <<: *common-environments
-    image: '${PROJECT_NAME}/admin-frontend'
-    pull_policy: never
-    volumes:
-      - '${ADMIN_FRONTEND_STATIC_DIR_PATH}:/static'
-
-  # Management backend
-  management-backend:
-    <<: *networks
-    build:
-      <<: *common-build-options
-      context: ./management-backend
-    container_name: '${PROJECT_NAME}-management-backend'
-    environment:
-      <<: *common-environments
-    image: '${PROJECT_NAME}/management-backend'
-    logging:
-      driver: json-file
-      options:
-        max-file: '5'
-        max-size: 10m
-    ports:
-      - '127.0.0.1:${MANAGEMENT_BACKEND_EXPOSE_PORT}:8000'
-    pull_policy: never
-    restart: always
-    secrets:
-      - MONGODB_URI
-      - REDIS_URL
-
-  # Ops workers ts
-  ops-workers-ts:
-    <<: *networks
-    build:
-      <<: *common-build-options
-      context: ./ops-workers-ts
-    container_name: '${PROJECT_NAME}-ops-workers-ts'
-    environment:
-      <<: *common-environments
-    image: '${PROJECT_NAME}/ops-workers-ts'
-    logging:
-      driver: json-file
-      options:
-        max-file: '5'
-        max-size: 10m
-    pull_policy: never
-    restart: always
-    secrets:
-      - MONGODB_URI
-      - REDIS_URL
+include:
+  - stacks/admin-frontend.compose.yaml
+  - stacks/management-backend.compose.yaml
+  - stacks/ops-workers-ts.compose.yaml

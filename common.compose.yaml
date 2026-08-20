@@ -1,0 +1,39 @@
+x-common-build-args: &common-build-args
+  NPM_CONFIG_REGISTRY: '${NPM_CONFIG_REGISTRY:-https://registry.npmjs.org}'
+  PNPM_CONFIG_REGISTRY: '${PNPM_CONFIG_REGISTRY:-https://registry.npmjs.org}'
+
+services:
+  common-service:
+    build:
+      args:
+        <<: *common-build-args
+    env_file:
+      - ./.env.services
+    environment:
+      NODE_ENV: production
+    logging:
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: 10m
+    networks:
+      - default
+      - infra_services
+    pull_policy: never
+    restart: always
+
+  common-frontend:
+    build:
+      args:
+        <<: *common-build-args
+    environment:
+      NODE_ENV: production
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 10m
+    networks:
+      - default
+    pull_policy: never
+    restart: always
