@@ -5,8 +5,8 @@ services:
       service: common-service
     build:
       context: ../repos/ops-workers-ts
-    container_name: '${PROJECT_NAME}-ops-workers-ts'
-    image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME}/ops-workers-ts'
+    container_name: '${PROJECT_NAME:?must be set}-ops-workers-ts'
+    image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME:?must be set}/ops-workers-ts'
     secrets:
       - MONGODB_URI
       - REDIS_URL

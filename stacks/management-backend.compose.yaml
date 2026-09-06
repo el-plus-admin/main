@@ -5,8 +5,8 @@ services:
       service: common-service
     build:
       context: ../repos/management-backend
-    container_name: '${PROJECT_NAME}-management-backend'
-    image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME}/management-backend'
+    container_name: '${PROJECT_NAME:?must be set}-management-backend'
+    image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME:?must be set}/management-backend'
     ports:
       - '127.0.0.1:${MANAGEMENT_BACKEND_EXPOSE_PORT:?must be set}:8000'
     secrets:

@@ -5,8 +5,8 @@ services:
       service: common-frontend
     build:
       context: ../repos/admin-frontend
-    container_name: '${PROJECT_NAME}-admin-frontend'
-    image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME}/admin-frontend'
+    container_name: '${PROJECT_NAME:?must be set}-admin-frontend'
+    image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME:?must be set}/admin-frontend'
     restart: no
     volumes:
       - '${ADMIN_FRONTEND_STATIC_DIR_PATH:?must be set}:/static'

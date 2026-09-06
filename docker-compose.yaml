@@ -1,11 +1,11 @@
-name: '${PROJECT_NAME}'
+name: '${PROJECT_NAME:?must be set}'
 
 networks:
   default:
     driver: bridge
   infra_services:
     external: true
-    name: '${PROJECT_NAME}-infra-services_default'
+    name: '${PROJECT_NAME:?must be set}-infra-services_default'
 
 secrets:
   MONGODB_URI:
