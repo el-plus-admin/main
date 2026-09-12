@@ -8,7 +8,7 @@ services:
     container_name: '${PROJECT_NAME:?must be set}-management-backend'
     image: '${DOCKER_REGISTRY_HOST:+${DOCKER_REGISTRY_HOST}/}${PROJECT_NAME:?must be set}/management-backend'
     ports:
-      - '127.0.0.1:${MANAGEMENT_BACKEND_EXPOSE_PORT:?must be set}:8000'
+      - '127.0.0.1:${MANAGEMENT_BACKEND_EXPOSE_PORT:?must be set}:8080'
     secrets:
       - MONGODB_URI
       - REDIS_URL
